@@ -70,4 +70,16 @@ class ContactManager {
 
         return $contacts;
     }
+
+    public function getContact(string $filename): ?array {
+        $filePath = $this->filepath .'/'. $filename . '.json';
+
+        if (!file_exists($filePath)) {
+            return null;
+        }
+
+        $contactData = json_decode(file_get_contents($filePath), true);
+
+        return $contactData;
+    }
 }

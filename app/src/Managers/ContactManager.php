@@ -82,4 +82,21 @@ class ContactManager {
 
         return $contactData;
     }
+
+    public function updateContact(string $filename, array $updatedData): array {
+        $filePath = $this->filepath .'/'. $filename . '.json';
+
+        $contactData = json_decode(file_get_contents($filePath), true);
+
+        foreach ($updatedData as $key => $value) {
+            $contactData[$key] = $value;
+        }
+
+        $contactData['dateOfLastUpdate'] = time();
+
+        file_put_contents($filePath, json_encode($contactData, JSON_PRETTY_PRINT));
+
+        return $contactData;
+        
+    }
 }

@@ -53,4 +53,21 @@ class ContactManager {
 
         return $filename;
     }
+
+    public function getAllContacts():array {
+        $contacts = [];
+
+        foreach (scandir($this->filepath) as $file) {
+            if (pathinfo($file, PATHINFO_EXTENSION) === 'json') {
+                $filePath = $this->filepath .'/'. $file;
+                $contactData = json_decode(file_get_contents($filePath), true);
+
+                if ($contactData) {
+                    $contacts[] = $contactData;
+                }
+            }
+        }
+
+        return $contacts;
+    }
 }
